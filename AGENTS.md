@@ -17,8 +17,9 @@
 - [Sicherheit](SECURITY.md) und [DSGVO](docs/DSGVO.md) – Sicherheitsmodell und Datenschutzprüfung.
 - [DSGVO-Prüfbericht](docs/DSGVO-PRUEFBERICHT.md) – Befunde und offene Betreiberfragen vom 18. November 2026.
 - [Kurs](KURS.md) – Übungen, Branches und Arbeitsabläufe.
-- [Spezifikation für Habit-Kategorien](specs/kategorien.md) – Entwurf aus der zweiten Kursstufe.
+- [Spezifikation für Habit-Kategorien](specs/kategorien.md) – freigegebener Umfang für Issue #1.
 - [Spec-Skill für Codex](.agents/skills/spec/SKILL.md) und [Spec-Workflow](.claude/skills/spec/SKILL.md) – Spezifikationen erarbeiten.
+- [Code-Workflow](.claude/skills/code/SKILL.md) – freigegebene Spezifikationen testgetrieben umsetzen.
 - [DSGVO-Skill](.agents/skills/dsgvo/SKILL.md) – Datenschutzprüfung im Repo durchführen.
 - GitHub-Vorlagen für [Pull Requests](.github/PULL_REQUEST_TEMPLATE.md), [Features](.github/ISSUE_TEMPLATE/feature_request.yml) und [Bugs](.github/ISSUE_TEMPLATE/bug_report.md).
 
