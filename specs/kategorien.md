@@ -1,6 +1,6 @@
 # Habit categories with filter
 
-Issue: #1  ·  Status: approved  ·  Approved-by: Philipduerholt, 2026-11-18
+Issue: #1  ·  Status: approved  ·  Approved-by: Philip Rekers, 2026-11-18
 
 ## Context
 With many habits the Habits list and the Today queue get hard to scan. Users want to
