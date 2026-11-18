@@ -1,6 +1,6 @@
 # Habit categories with filter
 
-Issue: #1  ·  Status: approved  ·  Approved-by: Fabian Meyer, 2026-11-16
+Issue: #1  ·  Status: approved  ·  Approved-by: Philipduerholt, 2026-11-18
 
 ## Context
 With many habits the Habits list and the Today queue get hard to scan. Users want to
@@ -75,7 +75,8 @@ coaching, reminders or stats. UI texts stay English.
 5. [x] Habits list: filter, filtered empty state, page reset in
    `app/pages/app/habits/index.vue`. Test: e2e list filter with deep link.
 6. [x] Today: filter, filtered counters, badges, filtered empty states (including the Open tab)
-   in `app/pages/app/index.vue`. Test: e2e Today filter.
+   in `app/pages/app/index.vue`. Keep E4 as a regression test for reviewing the last open
+   habit in the selected category while a habit in another category is still open.
 7. [x] AI prompts: `category` in both prompts and the habit export. Unit test first.
 
 ## Acceptance criteria
@@ -83,7 +84,7 @@ coaching, reminders or stats. UI texts stay English.
 - [ ] AC2: Habit cards on the Habits list and in the Today queue show the category as a badge.
 - [ ] AC3: The Habits list filters by category. The filter is in `?category=`, survives a reload and a shared link, "All categories" removes the param, an unknown value shows all habits, and a filter change jumps to page 1.
 - [ ] AC4: The Today queue filters by category via `?category=`. Open and Reviewed lists and the "x of y reviewed" counter count only the filtered habits. Streak strip and paused alert stay unfiltered.
-- [ ] AC5: With an active filter, empty states name the category: "No habits in <Category>" (list), "No due habits in <Category>" (Today), and "No open habits in <Category>" on the Open tab, which does not claim that everything due today is reviewed. Each offers "Show all categories", which resets the filter.
+- [ ] AC5: With an active filter, empty states name the category: "No habits in <Category>" (list), "No due habits in <Category>" (Today), and "No open habits in <Category>" on the Open tab when the selected category has due habits and all of them have been reviewed. If any other category still has an open due habit, the global message "Everything due today has already been reviewed." must be absent. Each category-specific empty state offers "Show all categories". Choosing it removes `category` from the URL and shows any remaining open habits.
 - [ ] AC6: Stored data and backups without `category`, V1 data, and imports with an unknown value load with `other`, without a recovery banner. `schemaVersion` stays 2. A habits-only import keeps valid categories.
 - [ ] AC7: The cross-tab merge treats `category` as a habit field. Demo data has at least two categories, and both AI prompts include the field.
 - [ ] AC8: ADR-0026 records the decision. Unit and e2e tests cover assignment, URL filter and reload.
@@ -95,7 +96,7 @@ coaching, reminders or stats. UI texts stay English.
 | AC2 | E1 (list badge), E4 (Today badge) | e2e, browser |
 | AC3 | `categories.test.ts` (`parseCategoryFilter`, `filterByCategory`); E3 (filter, URL, reset, deep link, `bogus`) | unit, e2e, browser |
 | AC4 | E4 (counters `0 of 2 reviewed`, mark done under filter) | e2e, browser |
-| AC5 | E3 (list), E4 (Today and Open tab) | e2e, browser |
+| AC5 | E3 (list); E4 seeds two due Health habits and one due Learning habit, filters to Health, reviews both Health habits, and checks the Health empty state, the reported open habit outside the filter, and the absence of the global completion message. Reload keeps Health selected. Reset reveals the open Learning habit. E4 also checks the no-due Work state. | e2e, browser |
 | AC6 | `categories.test.ts` U1 to U6, U13 | unit |
 | AC7 | `categories.test.ts` U10, U11, U12 | unit |
 | AC8 | ADR file and index; all gates | review |
@@ -110,7 +111,10 @@ Browser walk (`PORT=3110 npm run dev`, clean profile, demo login on `/login`):
    categories: param gone. Open `/app/habits?category=bogus`: all habits.
 3. AC5: On the list pick Other (no demo habit is Other): "No habits in Other", click
    "Show all categories".
-4. AC4/AC5: Today: pick Learning. Counter shows only Learning. Mark all Learning habits
-   done: Open tab says "No open habits in Learning", not "Everything due today …". Reload:
-   filter kept. Streak strip still shows all habits.
+4. AC4/AC5: Today: ensure Health has two open due habits and Learning has one.
+   Pick Health and confirm the counter shows only those two habits. Mark both Health
+   habits done. The Open tab says "No open habits in Health" and shows that one habit
+   is open in another category. The global completion message is absent. Reload and
+   confirm Health is still selected. Choose "Show all categories" to remove the query
+   parameter and reveal the open Learning habit. The streak strip shows all habits.
 5. Check the Today cards at 390x844: badge visible, no horizontal scroll.
