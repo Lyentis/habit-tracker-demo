@@ -1,6 +1,6 @@
 ---
 name: spec
-description: Turn a task or a GitHub issue into a reviewed specification in specs/<slug>.md. Reads AGENTS.md and docs/adr/, researches the code with a read-only subagent, asks the human about open points, then stops for approval. Use when the user wants to plan or specify a feature before coding.
+description: Plan or specify a feature before coding, including requests like "Plane mir Feature X". Turn a task or GitHub issue into a reviewed specification in specs/<slug>.md through code research and clarifying questions, then stop for human approval.
 argument-hint: "[issue-number | task description]"
 ---
 
