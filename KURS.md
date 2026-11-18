@@ -4,6 +4,10 @@ Der SDD-Workflow `spec` → `code` → `verify` entsteht hier Stufe für Stufe a
 (Kategorien für Habits mit Filter). Jede Stufe ist ein Branch, der auf der vorherigen
 aufbaut: `git switch stufe/03-code`. Die Skills liegen unter `.claude/skills/`.
 
+In der Codex-Desktop-App kannst du auf `stufe/01-spec-starter` den Skill über
+`/spec` im Chat auswählen. Gib danach die Aufgabe ein, z. B. „Kategorien für Habits“.
+In der CLI und der IDE-Erweiterung kannst du `$spec Kategorien für Habits` verwenden.
+
 Die Diff-Befehle nutzen `origin/`, damit sie in einem frischen Clone ohne lokale
 Stufen-Branches funktionieren.
 
