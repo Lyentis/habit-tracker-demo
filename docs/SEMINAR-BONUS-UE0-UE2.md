@@ -97,3 +97,38 @@ Spec-Skill und eine auf 60 Zeilen verdichtete `AGENTS.md`.
 Die gemeinsame Skill-Quelle bleibt `.claude/skills/`. Änderungen werden
 pfadgleich in derselben Änderung nach `.agents/skills/` gespiegelt.
 Die Regel steht in der [AGENTS.md](../AGENTS.md).
+
+## Debrief · Philip Rekers
+
+**Ü2**
+
+> Unsere wichtigste Regel: Wenn sich das gespeicherte Datenmodell oder das
+> Zod-Schema ändert, braucht es einen neuen ADR. Alte Browserdaten und
+> JSON-Backups müssen weiterhin laden. Die Details zum Kategorienfilter stehen
+> in der Spec. Meine Frage: Welche Teile dieser Regel würdet ihr in CI prüfen,
+> und welche gehören ins Review?
+
+**BMad-Bonus aus Ü3**
+
+Verglichen wurde die freigegebene [eigene Spec](../specs/kategorien.md) mit
+der fertigen BMad-Spec aus `origin/bmad/03-spec-bereit`, wie im Übungsheft
+für die Variante ohne Installation vorgesehen.
+
+| Punkt | Eigene Spec | BMad-Spec |
+| --- | --- | --- |
+| Fehlende Kategorie | `Other` | `null` |
+| Unbekannter URL-Wert | Alle Kategorien anzeigen | Leerer Trefferzustand mit Reset |
+| Randfall in Today | AC5 und E4 sichern den Fall einer erledigten Auswahl mit offenen Habits in einer anderen Kategorie ab | Die Edge-Case-Matrix und die Akzeptanzkriterien beschreiben denselben Fall |
+| Zusätzliche Code-Stelle | `ai-prompts.ts` für die Weitergabe des Kategoriefelds im Prompt | Die Code Map enthält dazu keinen Eintrag |
+| Freigabe | `Approved-by` mit Name und Datum im Spec-Commit | `ready-for-dev` im Frontmatter |
+
+Aus dem fertigen BMad-Artefakt geht nicht hervor, wie viele Rückfragen
+Build gestellt hat.
+
+> Die BMad-Matrix macht den Today-Randfall schnell sichtbar. Unsere Spec
+> verknüpft ihn mit E4 und hält die Freigabe mit Namen und Datum im Commit fest.
+> Bei Produktdetails kamen wir zu unterschiedlichen Ergebnissen: Unsere Spec
+> verwendet `Other` und zeigt bei einem unbekannten URL-Wert alle Kategorien.
+> Die BMad-Spec verwendet `null` und zeigt bei einem unbekannten URL-Wert
+> einen leeren Trefferzustand mit Reset. Meine Frage: Welche dieser
+> Entscheidungen sollte der Agent vor der Freigabe ausdrücklich zur Wahl stellen?
