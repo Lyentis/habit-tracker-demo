@@ -47,16 +47,16 @@ Die Umsetzung dieser Spec betrifft den Prüfablauf und die Skills des Habit Trac
 
 1. [x] Die Testfälle unten als Abnahmeprotokoll vor der Skill-Änderung festhalten. Danach `.agents/skills/verify/SKILL.md` für Prüfrunde, Fix-Liste und Abschlussbericht anlegen und bytegleich nach `.claude/skills/verify/SKILL.md` spiegeln.
 2. [x] Die Today-Regression aus Kategorie-AC5 als Übergabeszenario vorbereiten. Beide `code/SKILL.md`-Dateien bytegleich um automatische Berichtsaufnahme und den Fix-Lauf ergänzen. In beiden Verify-Kopien die Übergabe an Code, Wiederholung und Abbruch festlegen. Den Verify-Skill in `AGENTS.md` indexieren.
-3. [ ] Die Abnahmefälle in getrennten Test-Checkouts durchlaufen. Gate-Ergebnisse, Bericht und Commit-Verlauf vergleichen und die Skill-Kopien auf Bytegleichheit prüfen.
+3. [x] Die Abnahmefälle in getrennten Test-Checkouts durchlaufen. Gate-Ergebnisse, Bericht und Commit-Verlauf vergleichen und die Skill-Kopien auf Bytegleichheit prüfen.
 
 ## Acceptance criteria
 
-- [ ] AC1 — Ein Verify-Lauf protokolliert Lint, Typecheck, Vitest und Playwright für den lokalen Checkout. Ein blockiertes oder rotes Gate ist sichtbar und die übrigen Gates werden trotzdem ausgeführt.
-- [ ] AC2 — Der Bericht ordnet jedem AC und jeder Muss-Anforderung nachvollziehbare Quellen und Testbelege zu. Eine fehlende oder unerreichte Assertion kann kein `met` ergeben.
-- [ ] AC3 — Ein Verify-Aufruf verarbeitet den E4-Fehlschlag zum gefilterten Today-Leerzustand bis zur vollständigen Nachprüfung. Der Abschlussbericht enthält den ursprünglichen Befund zu Kategorie-AC5, Red, Green, Fix-Commit und die finalen Ergebnisse. Es gibt genau einen separaten Bericht-Commit.
-- [ ] AC4 — `/code` lädt den Bericht automatisch und vergleicht ihn mit dem aktuellen Stand. Unabhängige Fixes können getrennt delegiert werden. Jeder integrierte Code-Fix hat Red, Green und einen Commit. Ein bereits behobener alter Befund löst keinen weiteren Fix aus.
-- [ ] AC5 — Codex findet `verify` im Repo. Die jeweiligen Skill-Dateien unter `.agents/skills/` und `.claude/skills/` sind bytegleich, und der Indexlink ist gültig.
-- [ ] AC6 — Ein lokal behebbarer Blocker wird nach der Maßnahme erneut geprüft und im Abschlussbericht dokumentiert. Ein verbleibender Blocker ergibt `Issues found` mit Ursache und ausstehendem Gate, auch wenn andere Punkte erfolgreich behoben wurden.
+- [x] AC1 — Ein Verify-Lauf protokolliert Lint, Typecheck, Vitest und Playwright für den lokalen Checkout. Ein blockiertes oder rotes Gate ist sichtbar und die übrigen Gates werden trotzdem ausgeführt.
+- [x] AC2 — Der Bericht ordnet jedem AC und jeder Muss-Anforderung nachvollziehbare Quellen und Testbelege zu. Eine fehlende oder unerreichte Assertion kann kein `met` ergeben.
+- [x] AC3 — Ein Verify-Aufruf verarbeitet den E4-Fehlschlag zum gefilterten Today-Leerzustand bis zur vollständigen Nachprüfung. Der Abschlussbericht enthält den ursprünglichen Befund zu Kategorie-AC5, Red, Green, Fix-Commit und die finalen Ergebnisse. Es gibt genau einen separaten Bericht-Commit.
+- [x] AC4 — `/code` lädt den Bericht automatisch und vergleicht ihn mit dem aktuellen Stand. Unabhängige Fixes können getrennt delegiert werden. Jeder integrierte Code-Fix hat Red, Green und einen Commit. Ein bereits behobener alter Befund löst keinen weiteren Fix aus.
+- [x] AC5 — Codex findet `verify` im Repo. Die jeweiligen Skill-Dateien unter `.agents/skills/` und `.claude/skills/` sind bytegleich, und der Indexlink ist gültig.
+- [x] AC6 — Ein lokal behebbarer Blocker wird nach der Maßnahme erneut geprüft und im Abschlussbericht dokumentiert. Ein verbleibender Blocker ergibt `Issues found` mit Ursache und ausstehendem Gate, auch wenn andere Punkte erfolgreich behoben wurden.
 
 ## Verification plan
 
@@ -72,3 +72,5 @@ Die Umsetzung dieser Spec betrifft den Prüfablauf und die Skills des Habit Trac
 Gates: `npm run lint`, `npm run typecheck`, `npm test`, `PORT=3110 E2E_PORT=3110 npm run test:e2e`.
 
 Für die Abnahme des Skills deckt Playwright den Browserablauf ab. E4 öffnet Today, wählt Health, markiert Run und Stretch als erledigt, prüft den gefilterten Leerzustand, lädt neu und blendet über „Show all categories“ das offene Learning-Habit wieder ein. Die mobile Playwright-Konfiguration führt den Ablauf ebenfalls aus.
+
+Die Abnahme unter Node 22 reproduzierte E4 in beiden Browserprojekten und bestätigte den Fix im isolierten App-Checkout. Nach der Korrektur der Prüfbedingungen bestanden dort Lint, Typecheck, 452 Vitest-Tests mit zwei Workern und 117 Playwright-Tests bei einem übersprungenen Test. Die Übernahme eines älteren Berichts, das Fortsetzen nach einem roten Gate und beide Gesamturteile wurden zusätzlich in einem temporären Test-Repository mit simuliertem E2E-Gate geprüft. Auf Port 3110 blieb ein fremder Listener erreichbar. Nach dem Stoppen eines eigenen Test-Listeners bestand E4 erneut in beiden Browserprojekten.
