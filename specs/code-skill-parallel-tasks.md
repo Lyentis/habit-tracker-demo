@@ -46,14 +46,14 @@ App behavior, UI, persisted data, backups, test framework configuration, and pub
 ## Tasks
 
 1. [x] Define the independent-task and overlap scenarios below against the current `.claude/skills/code/SKILL.md`. Record which expectations its strictly sequential workflow fails, then add dispatch criteria, worktree ownership, Red handoff, and sequential recovery to that skill. Check coordination and final gates in the same scenarios.
-2. Mirror the revised skill to `.agents/skills/code/SKILL.md`. Check byte equality, validate both skill folders, and run the workflow scenarios in disposable local fixtures with the available subagent tools.
+2. [x] Mirror the revised skill to `.agents/skills/code/SKILL.md`. Check byte equality, validate both skill folders, and run the workflow scenarios in disposable local fixtures with the available subagent tools.
 
 ## Acceptance criteria
 
 - [x] AC1: Two ready tasks with disjoint writes start concurrently in separate worktrees. A task with an unfinished prerequisite or overlapping files stays queued.
 - [x] AC2: A worker's failing command and assertion reach the user before its production edit. The coordinator verifies each integrated result, creates one commit per task, and updates the checklist after integration.
 - [x] AC3: When subagents or worktree isolation are unavailable, the run proceeds sequentially. A blocked or overlapping worker leaves its work available for review and its task unchecked until integration succeeds.
-- [ ] AC4: The coordinator records integrated gate results, with required E2E targeting the integrated checkout on 3110. Both skill copies are byte-identical and pass skill validation.
+- [x] AC4: The coordinator records integrated gate results, with required E2E targeting the integrated checkout on 3110. Both skill copies are byte-identical and pass skill validation.
 
 ## Verification plan
 
@@ -65,5 +65,9 @@ App behavior, UI, persisted data, backups, test framework configuration, and pub
 | AC4 | Inspect where gates ran and how the checkout serving port 3110 was verified. Run `quick_validate.py` on both skill folders and compare SHA-256 hashes. | Repository checks |
 
 Gates: `npm run lint`, `npm run typecheck`, `npm test`, `PORT=3110 E2E_PORT=3110 npm run test:e2e`.
+
+Verification on Node 22 passed lint, typecheck, 452 Vitest tests, and 117 Playwright tests against a fresh server on port 3110. The mobile-only Playwright test was skipped in the desktop project. In the disposable fixture, two Codex subagents reported Red before Green in separate worktrees. The coordinator integrated one commit per task before running the dependent task. A blocked worker preserved its test draft, and a failed worktree setup triggered sequential execution.
+
+Both skill copies are byte-identical and Codex discovers its copy. The generic `quick_validate.py` rejects the existing `argument-hint` and `disable-model-invocation` fields on both the baseline and the revision. The common frontmatter passed validation on both copies, and the provider fields were checked separately against the baseline. The workflow was exercised in Codex.
 
 Browser walk: the skill has no browser-facing behavior. Browser verification applies to UI tasks delegated by the skill.
