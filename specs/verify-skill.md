@@ -45,9 +45,9 @@ Die Umsetzung dieser Spec betrifft den Prüfablauf und die Skills des Habit Trac
 
 ## Tasks
 
-1. Die Testfälle unten als Abnahmeprotokoll vor der Skill-Änderung festhalten. Danach `.agents/skills/verify/SKILL.md` für Prüfrunde, Fix-Liste und Abschlussbericht anlegen und bytegleich nach `.claude/skills/verify/SKILL.md` spiegeln.
-2. Die Today-Regression aus Kategorie-AC5 als Übergabeszenario vorbereiten. Beide `code/SKILL.md`-Dateien bytegleich um automatische Berichtsaufnahme und den Fix-Lauf ergänzen. In beiden Verify-Kopien die Übergabe an Code, Wiederholung und Abbruch festlegen. Den Verify-Skill in `AGENTS.md` indexieren.
-3. Die Abnahmefälle in getrennten Test-Checkouts durchlaufen. Gate-Ergebnisse, Bericht und Commit-Verlauf vergleichen und die Skill-Kopien auf Bytegleichheit prüfen.
+1. [x] Die Testfälle unten als Abnahmeprotokoll vor der Skill-Änderung festhalten. Danach `.agents/skills/verify/SKILL.md` für Prüfrunde, Fix-Liste und Abschlussbericht anlegen und bytegleich nach `.claude/skills/verify/SKILL.md` spiegeln.
+2. [ ] Die Today-Regression aus Kategorie-AC5 als Übergabeszenario vorbereiten. Beide `code/SKILL.md`-Dateien bytegleich um automatische Berichtsaufnahme und den Fix-Lauf ergänzen. In beiden Verify-Kopien die Übergabe an Code, Wiederholung und Abbruch festlegen. Den Verify-Skill in `AGENTS.md` indexieren.
+3. [ ] Die Abnahmefälle in getrennten Test-Checkouts durchlaufen. Gate-Ergebnisse, Bericht und Commit-Verlauf vergleichen und die Skill-Kopien auf Bytegleichheit prüfen.
 
 ## Acceptance criteria
 
