@@ -17,6 +17,7 @@
 - [Kurs](KURS.md) – Übungen, Branches und Arbeitsabläufe.
 - [Seminarbonus Ü0–Ü2](docs/SEMINAR-BONUS-UE0-UE2.md) – Ergebnisse der Vergleichsläufe und Browserprüfung.
 - [Spezifikation für Habit-Kategorien](specs/kategorien.md) – freigegebener Umfang für Issue #1.
+- [Spezifikation für parallele Aufgaben im Code-Skill](specs/code-skill-parallel-tasks.md) – freigegebener Umfang für die Delegation an Subagenten.
 - Spec-Skill für [Codex](.agents/skills/spec/SKILL.md) und [Claude Code](.claude/skills/spec/SKILL.md) – Spezifikationen erarbeiten.
 - Code-Skill für [Codex](.agents/skills/code/SKILL.md) und [Claude Code](.claude/skills/code/SKILL.md) – freigegebene Spezifikationen testgetrieben umsetzen.
 - [DSGVO-Skill](.agents/skills/dsgvo/SKILL.md) – Datenschutzprüfung im Repo durchführen.

@@ -59,25 +59,25 @@ No Dexie store or index change (filtering is in memory). No `schemaVersion` 3. N
 coaching, reminders or stats. UI texts stay English.
 
 ## Tasks
-1. [x] ADR-0026 "Habit category as an additive defaulted field", index in `docs/adr/README.md`,
-   `docs/glossary.md`, `docs/architecture.md`.
-2. [x] Data model: `HABIT_CATEGORIES` and `Habit.category` in `app/types/app-data.ts`;
-   `HabitCategorySchema` with `.catch('other')` in the strict and lenient schema and in
-   `migrateToV2`; `habitsEqualIgnoringId`; default in `createHabit`/`updateHabit`; demo data
-   categories; `makeHabit` and the test literals. Tests first: `tests/categories.test.ts`
-   (old V2, unknown value, V1, lenient import, backup round trip, fixture, store, merge, demo).
-3. [x] Pure helpers in `app/utils/domain/categories.ts` (labels, icons, options,
-   `parseCategoryFilter`, `filterByCategory`), `habitsByCategory` getter,
-   `app/composables/use-category-filter.ts` for the URL sync. Unit tests first.
-4. [x] Form: category select in `HabitForm.vue`, payload in `new.vue` and `[id].vue`, badge
-   on the cards in `app/pages/app/habits/index.vue`. Tests: `tests/nuxt/habit-form.test.ts`,
-   e2e create and edit with reload.
-5. [x] Habits list: filter, filtered empty state, page reset in
-   `app/pages/app/habits/index.vue`. Test: e2e list filter with deep link.
-6. [x] Today: filter, filtered counters, badges, filtered empty states (including the Open tab)
-   in `app/pages/app/index.vue`. Keep E4 as a regression test for reviewing the last open
-   habit in the selected category while a habit in another category is still open.
-7. [x] AI prompts: `category` in both prompts and the habit export. Unit test first.
+- [x] **Task 1** ADR-0026 "Habit category as an additive defaulted field", index in `docs/adr/README.md`,
+  `docs/glossary.md`, `docs/architecture.md`.
+- [x] **Task 2** Data model: `HABIT_CATEGORIES` and `Habit.category` in `app/types/app-data.ts`;
+  `HabitCategorySchema` with `.catch('other')` in the strict and lenient schema and in
+  `migrateToV2`; `habitsEqualIgnoringId`; default in `createHabit`/`updateHabit`; demo data
+  categories; `makeHabit` and the test literals. Tests first: `tests/categories.test.ts`
+  (old V2, unknown value, V1, lenient import, backup round trip, fixture, store, merge, demo).
+- [x] **Task 3** Pure helpers in `app/utils/domain/categories.ts` (labels, icons, options,
+  `parseCategoryFilter`, `filterByCategory`), `habitsByCategory` getter,
+  `app/composables/use-category-filter.ts` for the URL sync. Unit tests first.
+- [x] **Task 4** Form: category select in `HabitForm.vue`, payload in `new.vue` and `[id].vue`, badge
+  on the cards in `app/pages/app/habits/index.vue`. Tests: `tests/nuxt/habit-form.test.ts`,
+  e2e create and edit with reload.
+- [x] **Task 5** Habits list: filter, filtered empty state, page reset in
+  `app/pages/app/habits/index.vue`. Test: e2e list filter with deep link.
+- [x] **Task 6** Today: filter, filtered counters, badges, filtered empty states (including the Open tab)
+  in `app/pages/app/index.vue`. Keep E4 as a regression test for reviewing the last open
+  habit in the selected category while a habit in another category is still open.
+- [x] **Task 7** AI prompts: `category` in both prompts and the habit export. Unit test first.
 
 ## Acceptance criteria
 - [ ] AC1: The create and edit form have a "Category" select with Health, Learning, Work and Other. A new habit defaults to Other. The choice is saved and survives a reload.
