@@ -1,6 +1,6 @@
 ---
 name: code
-description: Implement an approved specification from specs/ task by task, test first, with small Conventional Commits. Lint, typecheck and tests must be green at the end.
+description: Implement tasks from approved specifications in specs/ using TDD. Delegate independent tasks to parallel subagents, integrate one Conventional Commit per task, and run the repository checks.
 argument-hint: "[specs/<slug>.md]"
 disable-model-invocation: true
 ---
@@ -27,14 +27,48 @@ Implement the approved spec: **$ARGUMENTS**
 - Start from a clean working tree. Run `npm test` once so you know the baseline is
   green before you change anything.
 
-## 3. Work the tasks in a TDD cycle
+## 3. Plan task order and delegate independent work
 
-For each task in the spec, in order:
+- Review unfinished tasks against the current code, interfaces, tests, and fixtures.
+  A task is ready when its prerequisites are committed on the integration branch.
+  Honor explicit ordering constraints. Delegate automatically when at least two
+  ready tasks have disjoint write sets and can be tested on the same baseline
+  without each other's changes. Queue tasks with overlapping writes or unfinished
+  prerequisites. Recheck the remaining tasks after each batch.
+- Use Codex's subagent tools or Claude Code's Agent tool. Set up a separate Git
+  worktree at the same integrated commit for each writing subagent. Give each
+  worker its exact worktree path, task, acceptance criteria, relevant contracts,
+  exclusive write paths, test commands and Red handoff instructions. Keep
+  delegation at the coordinator level. Prepare each checkout for its checks and
+  keep generated outputs in its worktree. Serialize checks that share host
+  resources. For Playwright on port 3110, confirm the server serves the checkout
+  being tested, since it can reuse an existing server.
+- Start the ready workers concurrently. Each worker completes Red and returns the
+  failing command and assertion, or `No test: <reason>`, then waits for the
+  coordinator. Surface each Red result to the user before authorizing that task's
+  Green step. Resume or reassign the worker in the same worktree for Green and
+  Refactor. Ask for a complete diff including new files, test results, and any
+  blockers. The coordinator handles commits on the integration branch and edits
+  the spec checklist.
+- Review each result against the task, owned paths, and Red evidence. Integrate
+  independent results in spec order, rerun their checks on the integration branch,
+  and commit each task separately. Mark it done only after its changes are
+  integrated and checked. Remove only the clean temporary worktrees you created
+  whose work has been integrated.
+- Continue sequentially when fewer than two tasks are ready for safe delegation,
+  or when tools, worktree isolation, or the Red handoff are unavailable. If a
+  worker is blocked or finds new overlap, stop its writes and preserve its work.
+  Resolve the blocker or dependency before resuming or taking over, and require
+  the same TDD evidence and checks before marking the task done.
+
+## 4. Work each task in a TDD cycle
+
+Use this cycle for both direct and delegated tasks:
 
 1. **Red.** Write or extend a test that describes the task's behavior and run it.
    It must fail for the right reason. **Hard rule: no production code for a task
    before you have seen its test fail.** Show the command and the failing
-   assertion in your reply before you implement. If a task has no testable
+   assertion in a user-facing update before you implement. If a task has no testable
    behavior (an ADR, docs, config), say so explicitly: `No test: <reason>`. Unit tests go to `tests/` (rendered
    components under `tests/nuxt/`), user flows go to `e2e/specs/`.
 2. **Green.** Write the smallest change that makes the test pass. Follow the
@@ -54,7 +88,7 @@ If a task turns out wrong or impossible, stop and tell the user. Do not change t
 scope on your own. Small details the spec left open are fine to decide; note them
 in the final report.
 
-## 4. Gates
+## 5. Gates
 
 When all tasks are done, run and make green:
 
@@ -65,14 +99,17 @@ npm test
 ```
 
 Run `PORT=3110 E2E_PORT=3110 npm run test:e2e` as well when you touched UI or
-flows. Never use port 3000 (the Playwright default). Fix failures at the cause. Never weaken, skip or delete a test to get green.
+flows. Verify the server on port 3110 serves the integrated checkout. Never use
+port 3000 (the Playwright default). Fix failures at the cause. Never weaken,
+skip or delete a test to get green.
 
-## 5. Report
+## 6. Report
 
 Tell the user:
 
 - the branch and the list of commits,
 - which tasks are done and which decisions you made on the way,
+- which tasks were delegated and where you continued sequentially,
 - the gate results,
 - anything open or risky.
 

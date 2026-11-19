@@ -45,14 +45,14 @@ App behavior, UI, persisted data, backups, test framework configuration, and pub
 
 ## Tasks
 
-1. Define the independent-task and overlap scenarios below against the current `.claude/skills/code/SKILL.md`. Record which expectations its strictly sequential workflow fails, then add dispatch criteria, worktree ownership, Red handoff, and sequential recovery to that skill. Check coordination and final gates in the same scenarios.
+1. [x] Define the independent-task and overlap scenarios below against the current `.claude/skills/code/SKILL.md`. Record which expectations its strictly sequential workflow fails, then add dispatch criteria, worktree ownership, Red handoff, and sequential recovery to that skill. Check coordination and final gates in the same scenarios.
 2. Mirror the revised skill to `.agents/skills/code/SKILL.md`. Check byte equality, validate both skill folders, and run the workflow scenarios in disposable local fixtures with the available subagent tools.
 
 ## Acceptance criteria
 
-- [ ] AC1: Two ready tasks with disjoint writes start concurrently in separate worktrees. A task with an unfinished prerequisite or overlapping files stays queued.
-- [ ] AC2: A worker's failing command and assertion reach the user before its production edit. The coordinator verifies each integrated result, creates one commit per task, and updates the checklist after integration.
-- [ ] AC3: When subagents or worktree isolation are unavailable, the run proceeds sequentially. A blocked or overlapping worker leaves its work available for review and its task unchecked until integration succeeds.
+- [x] AC1: Two ready tasks with disjoint writes start concurrently in separate worktrees. A task with an unfinished prerequisite or overlapping files stays queued.
+- [x] AC2: A worker's failing command and assertion reach the user before its production edit. The coordinator verifies each integrated result, creates one commit per task, and updates the checklist after integration.
+- [x] AC3: When subagents or worktree isolation are unavailable, the run proceeds sequentially. A blocked or overlapping worker leaves its work available for review and its task unchecked until integration succeeds.
 - [ ] AC4: The coordinator records integrated gate results, with required E2E targeting the integrated checkout on 3110. Both skill copies are byte-identical and pass skill validation.
 
 ## Verification plan
