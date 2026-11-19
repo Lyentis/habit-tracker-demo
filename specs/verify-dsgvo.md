@@ -38,8 +38,8 @@ Der Bericht erteilt keine Datenschutzfreigabe. Diese Änderung betrifft die Skil
 
 ## Tasks
 
-1. Die Prüfvarianten unten in einem isolierten Projektstand vorbereiten. Danach beide `verify/SKILL.md`-Kopien um DSGVO-Prüfung und Berichtsfeld ergänzen.
-2. In beiden `code/SKILL.md`-Kopien die automatische Berichtsübernahme auf die technische Fix-Liste begrenzen. Skill-Kopien bytegleich halten und alle Prüfvarianten in einem isolierten Lauf nachweisen.
+1. [x] Die Prüfvarianten unten in einem isolierten Projektstand vorbereiten. Danach beide `verify/SKILL.md`-Kopien um DSGVO-Prüfung und Berichtsfeld ergänzen.
+2. [ ] In beiden `code/SKILL.md`-Kopien die automatische Berichtsübernahme auf die technische Fix-Liste begrenzen. Skill-Kopien bytegleich halten und alle Prüfvarianten in einem isolierten Lauf nachweisen.
 
 ## Acceptance criteria
 
