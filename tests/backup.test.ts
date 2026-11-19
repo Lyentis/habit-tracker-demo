@@ -39,6 +39,27 @@ function emptyAppData(overrides: Partial<AppData> = {}): AppData {
 }
 
 describe('extractImportedHabits (#69)', () => {
+  it('round-trips a full backup with a custom category and its stable ID', () => {
+    const category = { id: 'category_music', label: 'Music' }
+    const habit = { ...validHabit(), category }
+    const backup = serializeBackup(emptyAppData({ habits: [habit] }))
+
+    expect(extractImportedHabits(JSON.parse(backup))).toEqual([habit])
+  })
+
+  it('preserves a category for missing or invalid legacy input and clears it only for null', () => {
+    const category = { id: 'category_music', label: 'Music' }
+    const existing = [{ ...validHabit(), category }]
+    const merged = (input: unknown) => mergeHabitsForImport(existing, extractImportedHabits([input])).mergedHabits[0]
+
+    expect(merged(validHabit())).toMatchObject({ category })
+    const invalid = { ...validHabit(), category: { id: 'health', label: 'x'.repeat(41) } }
+    expect(extractImportedHabits([invalid])[0]).not.toHaveProperty('category')
+    expect(merged(invalid)).toMatchObject({ category })
+    expect(merged({ ...validHabit(), category: null })).toMatchObject({ category: null })
+    expect(merged({ ...validHabit(), category: 'learning' })).toMatchObject({ category: 'learning' })
+  })
+
   it('returns habits from a full-backup envelope', () => {
     const backup = emptyAppData({ habits: [validHabit({ id: 'full_1', name: 'From backup' })] })
     const habits = extractImportedHabits(backup)

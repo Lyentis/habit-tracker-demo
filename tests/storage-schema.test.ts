@@ -40,6 +40,30 @@ function validHabit(overrides: Partial<Habit> = {}): Habit {
 }
 
 describe('storage schema', () => {
+  it('preserves valid categories in V2 without adding a category to older habits', () => {
+    const custom = { id: 'category_music', label: 'Music' }
+    const result = parseAppData({
+      ...createEmptyAppData(),
+      habits: [
+        validHabit(),
+        { ...validHabit({ id: 'h2' }), category: 'health' },
+        { ...validHabit({ id: 'h3' }), category: { ...custom, label: ' Music ' } },
+        { ...validHabit({ id: 'h4' }), category: null },
+      ],
+    })
+
+    expect(result.schemaVersion).toBe(2)
+    expect(result.habits[0]).not.toHaveProperty('category')
+    expect(result.habits.slice(1).map(habit => habit.category)).toEqual(['health', custom, null])
+  })
+
+  it('migrates a V1 habit without assigning it a category', () => {
+    const { pauses: _pauses, ...legacyHabit } = validHabit()
+    const result = parseAppData({ ...createEmptyAppData(), schemaVersion: 1, habits: [legacyHabit] })
+
+    expect(result.habits[0]).toEqual(validHabit())
+  })
+
   it('creates a valid empty payload', () => {
     const empty = createEmptyAppData()
     expect(() => parseAppData(empty)).not.toThrow()

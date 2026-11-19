@@ -2,6 +2,7 @@ import { beforeEach, describe, expect, it } from 'vitest'
 import { createPinia, setActivePinia } from 'pinia'
 import { useHabitsStore } from '~/stores/habits'
 import type { Habit, HabitCreateInput, HabitUpdateInput } from '~/types/app-data'
+import { resolveHabitCategoryLabel } from '~/utils/domain/habit-categories'
 
 function buildHabit(overrides: Partial<Habit> = {}): Habit {
   return {
@@ -45,6 +46,25 @@ function buildUpdateInput(overrides: Partial<HabitUpdateInput> = {}): HabitUpdat
   }
 }
 
+describe('habit category names', () => {
+  it('reuses a case-insensitive label from an archived habit', () => {
+    const category = { id: 'category_music', label: 'Music' }
+    expect(resolveHabitCategoryLabel('  mUsIc  ', [buildHabit({ category, archived: true })])).toEqual(category)
+  })
+
+  it('normalizes built-in labels, reserves filter labels and validates new names', () => {
+    expect(resolveHabitCategoryLabel(' HEALTH ', [])).toBe('health')
+    expect(resolveHabitCategoryLabel('No Category', [])).toBeNull()
+    expect(resolveHabitCategoryLabel('all categories', [])).toBeUndefined()
+    expect(resolveHabitCategoryLabel(' ', [])).toBeUndefined()
+    expect(resolveHabitCategoryLabel('x'.repeat(41), [])).toBeUndefined()
+    expect(resolveHabitCategoryLabel('  Music  ', [])).toMatchObject({
+      id: expect.stringMatching(/^category_/),
+      label: 'Music',
+    })
+  })
+})
+
 describe('habits store — createHabit', () => {
   beforeEach(() => {
     setActivePinia(createPinia())
@@ -56,6 +76,16 @@ describe('habits store — createHabit', () => {
 
     expect(habit.name).toBe('Morning run')
     expect(habit.identityStatement).toBe('I run.')
+  })
+
+  it('stores an independent copy of the assigned custom category', () => {
+    const store = useHabitsStore()
+    const category = { id: 'category_music', label: 'Music' }
+    const habit = store.createHabit(buildCreateInput({ category }))
+    category.label = 'Modified externally'
+
+    expect(habit).toMatchObject({ category: { id: 'category_music', label: 'Music' } })
+    expect(store.snapshot()[0]).toMatchObject({ category: { id: 'category_music', label: 'Music' } })
   })
 
   it('deduplicates and sorts scheduleWeekdays', () => {
@@ -103,6 +133,15 @@ describe('habits store — createHabit', () => {
 describe('habits store — updateHabit', () => {
   beforeEach(() => {
     setActivePinia(createPinia())
+  })
+
+  it('preserves an omitted assignment and clears an explicit null', () => {
+    const store = useHabitsStore()
+    const initial = buildHabit({ category: { id: 'category_music', label: 'Music' } })
+    store.hydrate([initial])
+
+    expect(store.updateHabit(initial.id, buildUpdateInput())).toMatchObject({ category: initial.category })
+    expect(store.updateHabit(initial.id, buildUpdateInput({ category: null }))).toMatchObject({ category: null })
   })
 
   it('updates habit fields and returns the updated habit', () => {

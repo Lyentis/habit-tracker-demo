@@ -21,14 +21,17 @@ also be invoked explicitly with `$code specs/<slug>.md`.
   next free number in `docs/adr/`, and add it to `docs/adr/README.md`.
 
 - Look for `specs/<slug>.verification.md` beside the spec and read it automatically
-  when present. Use the verification fix path below for open findings. A normal
-  Code invocation still processes unfinished spec tasks. When Verify hands off a
-  round, limit that pass to the report's findings and return control to Verify.
+  when present. Use the verification fix path below for open technical items in
+  its `## Fix list`. A normal Code invocation still processes unfinished spec
+  tasks. When Verify hands off a round, limit that pass to those open items and
+  return control to Verify.
 
 ### Verification fix path
 
-- Confirm the report belongs to the spec. Match each open ID to the approved
-  requirements and current sources, then reproduce it before editing. A report
+- Confirm the report belongs to the spec. Select only open technical findings
+  under `## Fix list`. The `## DSGVO` section and its suggested fixes are advisory
+  and require a separate request before implementation. Match each open ID to
+  the approved requirements and current sources, then reproduce it before editing. A report
   from an older SHA is useful context. Check whether the problem still exists.
   Return resolved, out-of-scope or unreproducible findings with the reason and
   evidence. Leave checks that could not run and confirmed external blockers open.

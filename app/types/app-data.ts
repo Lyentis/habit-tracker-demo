@@ -2,6 +2,16 @@ export const APP_DATA_SCHEMA_VERSION = 2 as const
 
 export type HabitType = 'build' | 'break'
 export type HabitStatus = 'done' | 'missed' | 'skipped'
+export const BUILT_IN_HABIT_CATEGORIES = ['health', 'learning', 'work', 'other'] as const
+export type BuiltInHabitCategory = (typeof BUILT_IN_HABIT_CATEGORIES)[number]
+
+export interface CustomHabitCategory {
+  id: string
+  label: string
+}
+
+export type HabitCategory = BuiltInHabitCategory | CustomHabitCategory
+
 export const PRIMARY_COLOR_OPTIONS = ['sky', 'emerald', 'violet', 'rose', 'amber'] as const
 export type PrimaryColor = (typeof PRIMARY_COLOR_OPTIONS)[number]
 
@@ -24,6 +34,7 @@ export type MissReasonCode = (typeof MISS_REASON_CODES)[number]
 export const FIELD_LIMITS = {
   id: 100,
   name: 200,
+  categoryLabel: 40,
   identity: 500,
   note: 1000,
   suggestionText: 500,
@@ -63,6 +74,7 @@ export interface HabitPause {
 export interface Habit {
   id: string
   name: string
+  category?: HabitCategory | null
   type: HabitType
   identityStatement: string
   scheduleWeekdays: number[]
@@ -116,9 +128,8 @@ export const BACKUP_NUDGE_THRESHOLD_WEEKS = 2
 export const BACKUP_NUDGE_SNOOZE_DAYS = 7
 
 /**
- * The current persisted envelope. The only shape change from V1 is the new
- * `pauses` field on `Habit`; see ADR-0010 and `migrateToV2` in
- * `app/utils/persistence/storage-schema.ts`.
+ * The current persisted envelope. V1 habits gain `pauses` during migration
+ * (ADR-0010). Category is optional in V2 (ADR-0025).
  */
 export interface AppDataV2 {
   schemaVersion: typeof APP_DATA_SCHEMA_VERSION
@@ -133,6 +144,7 @@ export type AppData = AppDataV2
 
 export interface HabitCreateInput {
   name: string
+  category?: HabitCategory | null
   type: HabitType
   identityStatement: string
   scheduleWeekdays: number[]
