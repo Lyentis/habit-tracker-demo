@@ -20,6 +20,7 @@
 - [Spezifikation für parallele Aufgaben im Code-Skill](specs/code-skill-parallel-tasks.md) – freigegebener Umfang für die Delegation an Subagenten.
 - [Spezifikation für den Verify-Skill](specs/verify-skill.md) – freigegebener Umfang für den automatisierten Prüf- und Fix-Ablauf.
 - [Spezifikation für DSGVO-Hinweise in Verify](specs/verify-dsgvo.md) – freigegebener Umfang für die Datenschutzprüfung im Abschlussbericht.
+- [Spezifikation für Review und Browser-Check in Verify](specs/verify-subagents.md) – freigegebener Umfang für zwei Prüfrollen mit Belegen je Akzeptanzkriterium.
 - [Spec-Skill für Codex](.agents/skills/spec/SKILL.md) – Spezifikationen erarbeiten.
 - [Code-Skill für Codex](.agents/skills/code/SKILL.md) – freigegebene Spezifikationen testgetrieben umsetzen.
 - [Verify-Skill für Codex](.agents/skills/verify/SKILL.md) – Gates ausführen, Befunde an Code übergeben und den Prüfbericht schreiben.

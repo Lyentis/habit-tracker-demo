@@ -44,7 +44,7 @@ Die Umsetzung betrifft die beiden Verify-Skill-Kopien und deren Berichtsvertrag.
 
 ## Tasks
 
-1. Die Szenarien für AC1–AC4 in isolierten lokalen Prüfständen vorbereiten und am bisherigen Ablauf die fehlenden Nachweise erfassen. Danach `.agents/skills/verify/SKILL.md` um Agentenaufträge, Vorschau, Berichtsfelder und Regeln für Urteil und Wiederholungsrunden ergänzen.
+1. [x] Die Szenarien für AC1–AC4 in isolierten lokalen Prüfständen vorbereiten und am bisherigen Ablauf die fehlenden Nachweise erfassen. Danach `.agents/skills/verify/SKILL.md` um Agentenaufträge, Vorschau, Berichtsfelder und Regeln für Urteil und Wiederholungsrunden ergänzen.
 2. Nach `.claude/skills/verify/SKILL.md` spiegeln. Beide Skill-Dateien per Hash vergleichen und die Szenarien mit den angebotenen Subagenten und einem echten Browser durchlaufen.
 
 ## Acceptance criteria
