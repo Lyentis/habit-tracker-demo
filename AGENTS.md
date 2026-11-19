@@ -16,10 +16,11 @@
 - [DSGVO-Prüfbericht](docs/DSGVO-PRUEFBERICHT.md) – Befunde und offene Betreiberfragen vom 18. November 2026.
 - [Kurs](KURS.md) – Übungen, Branches und Arbeitsabläufe.
 - [Seminarbonus Ü0–Ü2](docs/SEMINAR-BONUS-UE0-UE2.md) – Ergebnisse der Vergleichsläufe und Browserprüfung.
-- [Spezifikation für Habit-Kategorien](specs/kategorien.md) – freigegebener Umfang für Issue #1.
 - [Spezifikation für parallele Aufgaben im Code-Skill](specs/code-skill-parallel-tasks.md) – freigegebener Umfang für die Delegation an Subagenten.
+- [Spezifikation für den Verify-Skill](specs/verify-skill.md) – freigegebener Umfang für den automatisierten Prüf- und Fix-Ablauf.
 - [Spec-Skill für Codex](.agents/skills/spec/SKILL.md) – Spezifikationen erarbeiten.
 - [Code-Skill für Codex](.agents/skills/code/SKILL.md) – freigegebene Spezifikationen testgetrieben umsetzen.
+- [Verify-Skill für Codex](.agents/skills/verify/SKILL.md) – Gates ausführen, Befunde an Code übergeben und den Prüfbericht schreiben.
 - [DSGVO-Skill](.agents/skills/dsgvo/SKILL.md) – Datenschutzprüfung im Repo durchführen.
 - GitHub-Vorlagen für [Pull Requests](.github/PULL_REQUEST_TEMPLATE.md), [Features](.github/ISSUE_TEMPLATE/feature_request.yml) und [Bugs](.github/ISSUE_TEMPLATE/bug_report.md).
 

@@ -20,12 +20,44 @@ also be invoked explicitly with `$code specs/<slug>.md`.
   accepted ADR. If the spec asks for a new ADR, write it as part of the tasks:
   next free number in `docs/adr/`, and add it to `docs/adr/README.md`.
 
+- Look for `specs/<slug>.verification.md` beside the spec and read it automatically
+  when present. Use the verification fix path below for open findings. A normal
+  Code invocation still processes unfinished spec tasks. When Verify hands off a
+  round, limit that pass to the report's findings and return control to Verify.
+
+### Verification fix path
+
+- Confirm the report belongs to the spec. Match each open ID to the approved
+  requirements and current sources, then reproduce it before editing. A report
+  from an older SHA is useful context. Check whether the problem still exists.
+  Return resolved, out-of-scope or unreproducible findings with the reason and
+  evidence. Leave checks that could not run and confirmed external blockers open.
+- Follow the branch, isolation, delegation and TDD steps below. Treat each
+  confirmed root cause as one task. When an existing regression test fails for
+  that cause, use it unchanged as Red. Otherwise add the missing test and show
+  it failing first. Return targeted Green evidence and one commit per fixed ID.
+  A gap in proof alone is not evidence of a defect. Recheck existing assertions
+  and return a remaining evidence gap if there is no behavioral Red.
+- Permit only the working report produced by the active Verify run as an
+  expected local change. The coordinator owns that file and passes finding
+  details to workers without copying a dirty tree. Exclude the report from fix
+  commits and leave other uncommitted changes protected.
+- Record baseline failures and blockers by ID. Use Verify's local Playwright
+  setup for E2E checks in this mode. A separate
+  documented failure may remain while its own fix is pending. A check that
+  fails for a new reason or still fails for the point being fixed blocks that
+  integration. Run affected gates on the integration branch and compare them
+  with the baseline before each commit. Return the ID, Red and Green evidence,
+  commit SHA and any unresolved cause to the Verify coordinator.
+
 ## 2. Prepare the branch
 
 - Never work on `main`. If you are on `main`, create a branch first, for example
   `feat/<slug>` (include the issue number if there is one: `feat/12-<slug>`).
-- Start from a clean working tree. Run `npm test` once so you know the baseline is
-  green before you change anything.
+- Start from a clean working tree, allowing only the active report in the
+  verification fix path. Run `npm test` once before making changes. Require a
+  green baseline for ordinary implementation and record known failures for
+  verification fixes.
 
 ## 3. Plan task order and delegate independent work
 
@@ -80,9 +112,11 @@ Use this cycle for both direct and delegated tasks:
    `feat(categories): add category field to habit schema`,
    `test(e2e): cover category filter after reload`, `fix: …`, `docs(adr): …`.
    The message says what and why. Add a body line `Red: <test name>` for the
-   test you saw fail first (or `Red: none - <reason>`). Never commit a red state.
+   test you saw fail first (or `Red: none - <reason>`). Require Green for the
+   task. Any remaining failures must satisfy the verification fix path's baseline rule.
 
 Update the spec's task list as you go (`- [x]`) so a new session can resume.
+For a Verify handoff, report progress by finding ID to the coordinator.
 
 If a task turns out wrong or impossible, stop and tell the user. Do not change the
 scope on your own. Small details the spec left open are fine to decide; note them
@@ -90,7 +124,9 @@ in the final report.
 
 ## 5. Gates
 
-When all tasks are done, run and make green:
+When all tasks are done, run these gates. Require Green for regular
+implementation. In the verification fix path, report any documented remaining
+failure or blocker to Verify so it can complete the full recheck:
 
 ```bash
 npm run lint
@@ -113,5 +149,6 @@ Tell the user:
 - the gate results,
 - anything open or risky.
 
-When the verify skill is available, suggest `$verify specs/<slug>.md` as the next
-step. Do not push, open a PR or merge; that happens after verification.
+For a Verify handoff, return the findings and commit SHAs so Verify can continue
+the current loop. Otherwise, suggest `$verify specs/<slug>.md` when the skill is
+available. Keep publishing, PR creation and merging outside Code.

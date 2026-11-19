@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { HabitCategory, HabitPause, HabitType } from '~/types/app-data'
+import type { HabitPause, HabitType } from '~/types/app-data'
 
 definePageMeta({ layout: 'app' })
 
@@ -15,7 +15,6 @@ const habit = computed(() => habitsStore.habitById(habitId.value) ?? null)
 function onSubmit(payload: {
   name: string
   type: HabitType
-  category: HabitCategory
   identityStatement: string
   scheduleWeekdays: number[]
   reminderTime: string | null
@@ -26,7 +25,6 @@ function onSubmit(payload: {
   const updated = habitsStore.updateHabit(habitId.value, {
     name: payload.name,
     type: payload.type,
-    category: payload.category,
     identityStatement: payload.identityStatement,
     scheduleWeekdays: payload.scheduleWeekdays,
     reminderTime: payload.reminderTime,

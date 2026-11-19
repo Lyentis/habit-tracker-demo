@@ -8,6 +8,8 @@ The Code Skill implements every task in specification order, even when two tasks
 
 ## Research
 
+The category example below refers to the historical acceptance snapshot at `e1db754`.
+
 | File | Why it matters |
 | --- | --- |
 | `.claude/skills/code/SKILL.md:23`, `.agents/skills/code/SKILL.md:30` | The skill requires a clean baseline, sequential tasks, visible Red evidence before implementation, one commit per task, and final gates. `AGENTS.md:28` requires byte-identical copies. |

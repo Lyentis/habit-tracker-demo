@@ -53,8 +53,8 @@ Installation mit verlinkten Abhängigkeiten den Nuxt-Testeinstieg nicht laden.
 Die erste deckt Browserabläufe, Datenformat und Tests ab. Die zweite prüft
 die Korrekturen an URL und Leerzustand sowie die ergänzten Nachweise.
 
-**Für den nächsten Coding-Lauf.** [AC5 in der Spec](../specs/kategorien.md)
-nennt jetzt den konkreten Fall mit zwei Health-Habits und einem offenen
+**Historische Spec.** AC5 in `e1db754:specs/kategorien.md`
+nennt den konkreten Fall mit zwei Health-Habits und einem offenen
 Learning-Habit. E4 prüft den kategoriespezifischen Leerzustand, das Ausbleiben
 der globalen Abschlussmeldung, Reload und Rücksetzen des Filters. Die
 Stufenumsetzung deckt den Fall bereits ab.
@@ -110,7 +110,7 @@ Die Regel steht in der [AGENTS.md](../AGENTS.md).
 
 **BMad-Bonus aus Ü3**
 
-Verglichen wurde die freigegebene [eigene Spec](../specs/kategorien.md) mit
+Verglichen wurde die freigegebene Spec aus `e1db754:specs/kategorien.md` mit
 der fertigen BMad-Spec aus `origin/bmad/03-spec-bereit`, wie im Übungsheft
 für die Variante ohne Installation vorgesehen.
 

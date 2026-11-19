@@ -33,7 +33,6 @@ function validHabit(overrides: Partial<Habit> = {}): Habit {
     startDate: '2026-02-01',
     archived: false,
     pauses: [],
-    category: 'other',
     createdAt: '2026-02-01T00:00:00.000Z',
     updatedAt: '2026-02-01T00:00:00.000Z',
     ...overrides,
@@ -351,7 +350,6 @@ describe('parseLenientHabit (#69)', () => {
     startDate: '2026-02-01',
     archived: true,
     pauses: [{ start: '2026-03-01', end: '2026-03-02' }],
-    category: 'work',
     createdAt: '2026-02-01T00:00:00.000Z',
     updatedAt: '2026-02-02T00:00:00.000Z',
   }

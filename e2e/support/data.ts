@@ -55,7 +55,6 @@ export function makeHabit(overrides: Partial<Habit> = {}): Habit {
     startDate: start,
     archived: overrides.archived ?? false,
     pauses: overrides.pauses ?? [],
-    category: overrides.category ?? 'other',
     createdAt: overrides.createdAt ?? ISO,
     updatedAt: overrides.updatedAt ?? ISO,
   }
