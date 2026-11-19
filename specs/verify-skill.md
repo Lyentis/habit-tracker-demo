@@ -12,9 +12,9 @@ Das Entwicklungsteam des Habit Trackers soll nach `/code` mit einem Aufruf prüf
 | --- | --- |
 | [AGENTS.md](../AGENTS.md), [Code-Skill](../.agents/skills/code/SKILL.md) | Regeln für Skill-Pfade, Gates, Red-Nachweis und einen Commit je Aufgabe. Code delegiert bereits über getrennte Worktrees. Der neue Fix-Lauf ergänzt die Berichtsaufnahme und den Umgang mit bekannten Fehlern im Ausgangsstand. |
 | [package.json](../package.json), [vitest.config.ts](../vitest.config.ts), [playwright.config.ts](../playwright.config.ts) | `npm test` startet `unit` und `nuxt`. Playwright fährt Desktop und Mobile und kann lokal einen vorhandenen Server wiederverwenden. |
-| [Kategorie-Spec](kategorien.md#verification-plan), [Today-Ansicht](../app/pages/app/index.vue#L650), [E2E E4](../e2e/specs/categories.spec.ts#L105), [Kategorie-Tests](../tests/categories.test.ts#L70) | Reale Belege für AC5 (Filter, Leerzustand, Reload) und AC6 (Altdaten und Backups). |
+| Abnahmestand `e1db754` mit `specs/kategorien.md`, `app/pages/app/index.vue`, `e2e/specs/categories.spec.ts` und `tests/categories.test.ts` | Historischer Testfall für den Skill. |
 
-ADR-0012 legt die beiden Vitest-Projekte fest. ADR-0020 beschreibt auch die lokale Playwright-Vorschau. ADR-0026 ist beim Abgleich der Kategorie-Spec relevant. Die Änderung betrifft den Prüfablauf des Projekts und braucht keinen neuen App-ADR.
+ADR-0012 legt die beiden Vitest-Projekte fest. ADR-0020 beschreibt auch die lokale Playwright-Vorschau. Die Änderung betrifft den Prüfablauf des Projekts und braucht keinen neuen App-ADR.
 
 Entscheidungen aus der Klärung: automatisierter Prüf- und Fix-Ablauf, automatische Übernahme des Berichts durch `/code` und ein separater Commit für den Abschlussbericht. Eigenständige Prüfungen und Fixes können an Subagenten übergeben werden.
 
