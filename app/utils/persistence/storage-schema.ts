@@ -1,6 +1,7 @@
 import { z } from 'zod'
 import {
   APP_DATA_SCHEMA_VERSION,
+  BUILT_IN_HABIT_CATEGORIES,
   COLLECTION_LIMITS,
   DEFAULT_SETTINGS,
   FIELD_LIMITS,
@@ -10,6 +11,7 @@ import {
   type Habit,
 } from '~/types/app-data'
 import { compareDateKeys, isValidDateKey, nowIso, todayDateKey } from '~/utils/domain/date'
+import { CUSTOM_HABIT_CATEGORY_ID_PATTERN, isCustomHabitCategoryLabel } from '~/utils/domain/habit-categories'
 import { createId } from '~/utils/domain/id'
 import {
   assertMigrationRegistryInvariants,
@@ -62,7 +64,16 @@ const HabitV1Schema = z.object({
 
 // ── V2 schemas (current shape) ───────────────────────────────────────────────
 
+const HabitCategorySchema = z.union([
+  z.enum(BUILT_IN_HABIT_CATEGORIES),
+  z.object({
+    id: z.string().max(FIELD_LIMITS.id).regex(CUSTOM_HABIT_CATEGORY_ID_PATTERN),
+    label: z.string().trim().refine(isCustomHabitCategoryLabel, 'Invalid custom category name'),
+  }),
+]).nullable().optional()
+
 const HabitSchema = HabitV1Schema.extend({
+  category: HabitCategorySchema,
   pauses: z.array(HabitPauseSchema).max(COLLECTION_LIMITS.pausesPerHabit),
 })
 
@@ -104,6 +115,7 @@ const LenientHabitImportSchema = z.object({
   reminderTime: z.string().regex(TIME_REGEX).nullable().catch(null),
   startDate: dateKeySchema.catch(() => todayDateKey()),
   archived: z.boolean().catch(false),
+  category: HabitCategorySchema.catch(undefined),
   pauses: z.array(HabitPauseSchema).max(COLLECTION_LIMITS.pausesPerHabit).catch([]),
   createdAt: z.string().min(1).max(FIELD_LIMITS.timestamp).catch(() => nowIso()),
   updatedAt: z.string().min(1).max(FIELD_LIMITS.timestamp).catch(() => nowIso()),
@@ -135,7 +147,14 @@ export { LenientHabitImportSchema }
  */
 export function parseLenientHabit(raw: unknown): Habit | null {
   const result = LenientHabitImportSchema.safeParse(raw)
-  return result.success ? result.data : null
+  if (!result.success) {
+    return null
+  }
+  // An invalid assignment has the same import semantics as an absent legacy field.
+  if (result.data.category === undefined) {
+    delete result.data.category
+  }
+  return result.data
 }
 
 const HabitEntrySchema = z.object({

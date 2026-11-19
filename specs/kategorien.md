@@ -43,10 +43,10 @@ Die Daten bleiben im Browser. Die bestehenden KI-Prompts erhalten keine Kategori
 
 ## Tasks
 
-1. Schema-, Backup-, Merge- und Store-Regressionen zuerst in `tests/storage-schema.test.ts`, `tests/backup.test.ts`, `tests/merge-app-data.test.ts` und `tests/habits-store.test.ts` abdecken. Typen, Domänenhelfer, Store, Schemas und Merge anpassen. Den neuen ADR in `docs/adr/` indexieren.
-2. Formular- und E2E-Tests für Auswahl, Wiederverwendung und Löschen der Zuordnung ergänzen. `HabitForm.vue`, `app/pages/app/habits/new.vue`, `app/pages/app/habits/[id].vue` und bei Bedarf die Builder unter `e2e/support/` anpassen.
-3. URL-, Archiv- und Paginierungsfälle in der Habit-Liste testen. Danach einen gemeinsamen URL-Filter unter `app/composables/` und die Listenansicht implementieren.
-4. Today-Regressionen in `e2e/specs/dashboard.spec.ts` oder einem eigenen Kategorien-Spec abdecken. Danach `app/pages/app/index.vue` um Filter, Badges, Zähler und Leerzustände ergänzen.
+1. [x] Schema-, Backup-, Merge- und Store-Regressionen zuerst in `tests/storage-schema.test.ts`, `tests/backup.test.ts`, `tests/merge-app-data.test.ts` und `tests/habits-store.test.ts` abdecken. Typen, Domänenhelfer, Store, Schemas und Merge anpassen. Den neuen ADR in `docs/adr/` indexieren.
+2. [ ] Formular- und E2E-Tests für Auswahl, Wiederverwendung und Löschen der Zuordnung ergänzen. `HabitForm.vue`, `app/pages/app/habits/new.vue`, `app/pages/app/habits/[id].vue` und bei Bedarf die Builder unter `e2e/support/` anpassen.
+3. [ ] URL-, Archiv- und Paginierungsfälle in der Habit-Liste testen. Danach einen gemeinsamen URL-Filter unter `app/composables/` und die Listenansicht implementieren.
+4. [ ] Today-Regressionen in `e2e/specs/dashboard.spec.ts` oder einem eigenen Kategorien-Spec abdecken. Danach `app/pages/app/index.vue` um Filter, Badges, Zähler und Leerzustände ergänzen.
 
 ## Acceptance criteria
 

@@ -70,6 +70,21 @@ function settings(overrides: Partial<AppSettings> = {}): AppSettings {
 
 describe('mergeAppData (#67)', () => {
   describe('habits', () => {
+    it('merges a category-only edit and compares custom category values structurally', () => {
+      const base = appData({ habits: [habit('h1')] })
+      const category = { id: 'category_music', label: 'Music' }
+      const assigned = habit('h1', { category })
+      const withCategory = appData({ habits: [assigned] })
+
+      expect(mergeAppData(base, base, withCategory)).toMatchObject({ status: 'merged', data: { habits: [assigned] } })
+      expect(mergeAppData(base, withCategory, appData({
+        habits: [habit('h1', { category: { ...category } })],
+      }))).toMatchObject({ status: 'merged', data: { habits: [assigned] } })
+      expect(mergeAppData(base, withCategory, appData({
+        habits: [habit('h1', { category: { ...category, label: 'Choir' } })],
+      }))).toMatchObject({ status: 'conflict' })
+    })
+
     it('merges disjoint habit edits', () => {
       const base = appData({ habits: [habit('h1'), habit('h2')] })
       const ours = appData({ habits: [habit('h1', { name: 'Renamed by us' }), habit('h2')] })

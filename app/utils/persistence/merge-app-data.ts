@@ -6,6 +6,7 @@ import {
   type Habit,
   type HabitEntry,
 } from '~/types/app-data'
+import { habitCategoriesEqual } from '~/utils/domain/habit-categories'
 
 /**
  * Deterministic, dependency-free three-way merge of two app-data envelopes that
@@ -73,6 +74,7 @@ function arraysEqual<T>(a: readonly T[], b: readonly T[]): boolean {
 function habitsEqualIgnoringId(a: Habit, b: Habit): boolean {
   return (
     a.name === b.name
+    && habitCategoriesEqual(a.category, b.category)
     && a.type === b.type
     && a.identityStatement === b.identityStatement
     && arraysEqual(a.scheduleWeekdays, b.scheduleWeekdays)

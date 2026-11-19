@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia'
 import { toRaw } from 'vue'
-import type { Habit, HabitCreateInput, HabitPause, HabitUpdateInput } from '~/types/app-data'
+import type { Habit, HabitCategory, HabitCreateInput, HabitPause, HabitUpdateInput } from '~/types/app-data'
 import { compareDateKeys, nowIso, isHabitDueOnDate } from '~/utils/domain/date'
 import { createId } from '~/utils/domain/id'
 
@@ -18,6 +18,10 @@ function normalizePauses(pauses: HabitPause[] | undefined): HabitPause[] {
     .filter(pause => compareDateKeys(pause.start, pause.end) <= 0)
     .map(pause => ({ start: pause.start, end: pause.end }))
     .sort((left, right) => compareDateKeys(left.start, right.start) || compareDateKeys(left.end, right.end))
+}
+
+function copyCategory(category: HabitCategory | null): HabitCategory | null {
+  return category && typeof category === 'object' ? { id: category.id, label: category.label.trim() } : category
 }
 
 export const useHabitsStore = defineStore('habits', {
@@ -59,6 +63,9 @@ export const useHabitsStore = defineStore('habits', {
         createdAt: now,
         updatedAt: now,
       }
+      if (input.category !== undefined) {
+        habit.category = copyCategory(input.category)
+      }
 
       this.habits.unshift(habit)
       return habit
@@ -77,6 +84,9 @@ export const useHabitsStore = defineStore('habits', {
       habit.startDate = input.startDate
       habit.archived = input.archived
       habit.pauses = normalizePauses(input.pauses)
+      if (input.category !== undefined) {
+        habit.category = copyCategory(input.category)
+      }
       habit.updatedAt = nowIso()
 
       return habit
