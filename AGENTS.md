@@ -18,8 +18,8 @@
 - [Seminarbonus Ü0–Ü2](docs/SEMINAR-BONUS-UE0-UE2.md) – Ergebnisse der Vergleichsläufe und Browserprüfung.
 - [Spezifikation für Habit-Kategorien](specs/kategorien.md) – freigegebener Umfang für Issue #1.
 - [Spezifikation für parallele Aufgaben im Code-Skill](specs/code-skill-parallel-tasks.md) – freigegebener Umfang für die Delegation an Subagenten.
-- Spec-Skill für [Codex](.agents/skills/spec/SKILL.md) und [Claude Code](.claude/skills/spec/SKILL.md) – Spezifikationen erarbeiten.
-- Code-Skill für [Codex](.agents/skills/code/SKILL.md) und [Claude Code](.claude/skills/code/SKILL.md) – freigegebene Spezifikationen testgetrieben umsetzen.
+- [Spec-Skill für Codex](.agents/skills/spec/SKILL.md) – Spezifikationen erarbeiten.
+- [Code-Skill für Codex](.agents/skills/code/SKILL.md) – freigegebene Spezifikationen testgetrieben umsetzen.
 - [DSGVO-Skill](.agents/skills/dsgvo/SKILL.md) – Datenschutzprüfung im Repo durchführen.
 - GitHub-Vorlagen für [Pull Requests](.github/PULL_REQUEST_TEMPLATE.md), [Features](.github/ISSUE_TEMPLATE/feature_request.yml) und [Bugs](.github/ISSUE_TEMPLATE/bug_report.md).
 
@@ -28,9 +28,10 @@ verschoben oder entfernt werden. Prüfe relative Links. Einzelne ADRs gehören i
 
 ## Skills pflegen
 
-- `.claude/skills/` ist die Quelle der gemeinsamen Skills. Spiegle neue oder
-  geänderte Dateien in derselben Änderung unter demselben relativen Pfad nach
-  `.agents/skills/`. Übertrage auch Umbenennungen und Löschungen.
+- Codex ist die Zielplattform. Pflege die Skills unter `.agents/skills/`.
+- `.claude/skills/` bleibt als Artefakt für die Übungen erhalten. Spiegle Änderungen
+  an dort vorhandenen Übungsskills in derselben Änderung unter demselben relativen
+  Pfad. Übertrage auch Umbenennungen und Löschungen.
 - Prüfe die Kopien auf Bytegleichheit. Eigenständige Codex-Skills wie `dsgvo` bleiben in `.agents/skills/`.
 
 ## Architektur

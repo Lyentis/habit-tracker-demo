@@ -19,14 +19,14 @@ The Code Skill implements every task in specification order, even when two tasks
 
 ADR-0012 defines the `unit` and `nuxt` Vitest projects. The new workflow uses the existing projects and commands. This is a change to the course's implementation instructions and requires no app architecture ADR.
 
-Clarification decisions: delegate automatically when independence is clear, use a separate Git worktree for each writing subagent, and continue sequentially when safe parallel execution is unavailable.
+Clarification decisions: delegate automatically when independence is clear, use a separate Git worktree for each writing subagent, and continue sequentially when safe parallel execution is unavailable. Codex is the target platform. The `.claude` copy stays in the repo for the exercises.
 
 ## Requirements
 
 ### Must
 
 - Keep spec approval and baseline checks before dispatch. Review the unfinished tasks against the actual files and contracts. Run tasks concurrently when at least two are ready, have disjoint write sets including tests and fixtures, and can pass their own checks against the same integrated baseline. Honor explicit ordering constraints and wait for prerequisite commits before dispatch. Integrate independent results in spec order within each batch.
-- Use the available Codex or Claude Code subagent tool. Assign each worker a task, acceptance criteria, relevant contracts, exclusive file paths, test commands, and its own worktree. Give each worktree separate generated outputs. Serialize checks that need the same host resource, including E2E on port 3110, and verify that the server serves the checkout being tested.
+- Use the available Codex subagent tools. Assign each worker a task, acceptance criteria, relevant contracts, exclusive file paths, test commands, and its own worktree. Give each worktree separate generated outputs. Serialize checks that need the same host resource, including E2E on port 3110, and verify that the server serves the checkout being tested.
 - Preserve Red → Green → Refactor per task. The worker returns the failing command and assertion, or the existing `No test: <reason>` for work without testable behavior. The coordinator surfaces Red evidence before releasing the worker to edit production code. The worker returns its diff, test results, and blockers.
 - The coordinator reviews changes against the task and owned files, integrates and verifies each result, records one Conventional Commit per task with the existing `Red:` body line, and updates the spec checklist only after the task is integrated. It runs the existing gates on the integrated branch and reports delegated tasks, fallbacks, and gate results.
 - Run the relevant tasks sequentially when their dependencies or file ownership overlap, available workers cannot be isolated, or tooling cannot support the required handoff. If a worker is blocked or discovers overlap, stop its writes, preserve its work, and resolve the dependency before retrying or taking over. Require the same evidence and checks before marking the task done.
@@ -68,6 +68,6 @@ Gates: `npm run lint`, `npm run typecheck`, `npm test`, `PORT=3110 E2E_PORT=3110
 
 Verification on Node 22 passed lint, typecheck, 452 Vitest tests, and 117 Playwright tests against a fresh server on port 3110. The mobile-only Playwright test was skipped in the desktop project. In the disposable fixture, two Codex subagents reported Red before Green in separate worktrees. The coordinator integrated one commit per task before running the dependent task. A blocked worker preserved its test draft, and a failed worktree setup triggered sequential execution.
 
-Both skill copies are byte-identical and Codex discovers its copy. The generic `quick_validate.py` rejects the existing `argument-hint` and `disable-model-invocation` fields on both the baseline and the revision. The common frontmatter passed validation on both copies, and the provider fields were checked separately against the baseline. The workflow was exercised in Codex.
+`quick_validate.py` passes directly on both byte-identical skill copies. Codex discovers its copy under `.agents/skills/` and can select it automatically for approved-spec implementation requests. An explicit `$code` invocation is also available.
 
 Browser walk: the skill has no browser-facing behavior. Browser verification applies to UI tasks delegated by the skill.

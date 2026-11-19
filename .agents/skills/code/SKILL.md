@@ -1,17 +1,17 @@
 ---
 name: code
 description: Implement tasks from approved specifications in specs/ using TDD. Delegate independent tasks to parallel subagents, integrate one Conventional Commit per task, and run the repository checks.
-argument-hint: "[specs/<slug>.md]"
-disable-model-invocation: true
 ---
 
 # Code
 
-Implement the approved spec: **$ARGUMENTS**
+Use this skill when the user asks to implement an approved specification. It can
+also be invoked explicitly with `$code specs/<slug>.md`.
 
 ## 1. Load the spec
 
-- If the argument is empty, list `specs/*.md` and ask which spec to implement.
+- Identify the spec from the request or conversation context. If the spec is
+  unclear, list `specs/*.md` and ask which one to implement.
 - Read the whole spec. It is the source of truth for scope: build what it asks
   for, no more and no less.
 - Check that the human approved it. If the status still says "draft" and the user
@@ -35,8 +35,8 @@ Implement the approved spec: **$ARGUMENTS**
   ready tasks have disjoint write sets and can be tested on the same baseline
   without each other's changes. Queue tasks with overlapping writes or unfinished
   prerequisites. Recheck the remaining tasks after each batch.
-- Use Codex's subagent tools or Claude Code's Agent tool. Set up a separate Git
-  worktree at the same integrated commit for each writing subagent. Give each
+- Use Codex's subagent tools. Set up a separate Git worktree at the same
+  integrated commit for each writing subagent. Give each
   worker its exact worktree path, task, acceptance criteria, relevant contracts,
   exclusive write paths, test commands and Red handoff instructions. Keep
   delegation at the coordinator level. Prepare each checkout for its checks and
@@ -113,5 +113,5 @@ Tell the user:
 - the gate results,
 - anything open or risky.
 
-Then suggest `/verify specs/<slug>.md` as the next step. Do not push, open a PR or
-merge; that happens after verification.
+When the verify skill is available, suggest `$verify specs/<slug>.md` as the next
+step. Do not push, open a PR or merge; that happens after verification.
