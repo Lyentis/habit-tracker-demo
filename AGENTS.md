@@ -23,7 +23,7 @@
 - [Spezifikation für Review und Browser-Check in Verify](specs/verify-subagents.md) – freigegebener Umfang für zwei Prüfrollen mit Belegen je Akzeptanzkriterium.
 - [Spec-Skill für Codex](.agents/skills/spec/SKILL.md) – Spezifikationen erarbeiten.
 - [Code-Skill für Codex](.agents/skills/code/SKILL.md) – freigegebene Spezifikationen testgetrieben umsetzen.
-- [Verify-Skill für Codex](.agents/skills/verify/SKILL.md) – Gates ausführen, Befunde an Code übergeben und den Prüfbericht schreiben.
+- [Verify-Skill für Codex](.agents/skills/verify/SKILL.md) – Gates ausführen, Befunde an Code übergeben und den Prüfbericht schreiben. Projekt-Agents [Reviewer](.codex/agents/verify-reviewer.toml) und [Browser](.codex/agents/verify-browser.toml).
 - [DSGVO-Skill](.agents/skills/dsgvo/SKILL.md) – Datenschutzprüfung im Repo durchführen.
 - GitHub-Vorlagen für [Pull Requests](.github/PULL_REQUEST_TEMPLATE.md), [Features](.github/ISSUE_TEMPLATE/feature_request.yml) und [Bugs](.github/ISSUE_TEMPLATE/bug_report.md).
 
