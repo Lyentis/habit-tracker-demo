@@ -1,0 +1,15 @@
+{
+  "hooks": {
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node \"$(git rev-parse --show-toplevel)/.codex/hooks/gates-on-stop.cjs\"",
+            "statusMessage": "Running lint and unit tests"
+          }
+        ]
+      }
+    ]
+  }
+}
